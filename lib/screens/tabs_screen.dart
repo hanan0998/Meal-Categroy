@@ -10,36 +10,45 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+  // for lists of pages to be rended
+  final List<Map<String, dynamic>> _pages = [
+    {'page': CategoriesScreen(), 'title': "Categories"},
+    {'page': FavoriteScreen(), 'title': 'Your Favourties'}
+  ];
+  int _selectedPageIndex = 0;
+
+  void _selectPage(int index) {
+    setState(() {
+      _selectedPageIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      // to tell which tab will be open as default tab
-      initialIndex: 0,
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Meal"),
-          bottom: TabBar(
-            labelColor: Colors.white,
-            tabs: [
-              Tab(
-                icon: Icon(
-                  Icons.category,
-                  color: Colors.white,
-                ),
-                text: 'Categories',
-              ),
-              Tab(
-                icon: Icon(
-                  Icons.star,
-                  color: Colors.white,
-                ),
-                text: 'Favorites',
-              ),
-            ],
-          ),
-        ),
-        body: TabBarView(children: [CategoriesScreen(), FavoriteScreen()]),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_pages[_selectedPageIndex]['title']),
+      ),
+      body: _pages[_selectedPageIndex]['page'],
+      bottomNavigationBar: BottomNavigationBar(
+        // type: BottomNavigationBarType.shifting,
+        // this is default
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedPageIndex,
+        unselectedItemColor: Colors.white,
+        selectedItemColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Colors.deepPurple,
+        onTap: _selectPage,
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.category),
+              label: 'Categoires',
+              backgroundColor: Colors.deepPurple),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.star),
+              label: 'Favorites',
+              backgroundColor: Colors.deepPurple)
+        ],
       ),
     );
   }

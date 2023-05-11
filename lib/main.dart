@@ -21,9 +21,10 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
           primarySwatch: Colors.pink,
-          primaryColor: Colors.amber,
+          // primaryColor: Colors.amber,
           colorScheme: ColorScheme.light(),
           canvasColor: Color.fromRGBO(225, 254, 229, 1),
+          accentColor: Colors.amber,
           fontFamily: 'Raleway',
           // giving themedata to texttheme to have the theme of the patent themedata
           textTheme: ThemeData.light().textTheme.copyWith(
