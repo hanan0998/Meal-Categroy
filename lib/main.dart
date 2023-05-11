@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+
+import './screens/tabs_screen.dart';
+import './screens/favorite_screen.dart';
 import './screens/Categories_screen.dart';
 import './screens/category_details_screen.dart';
+import './screens/meal_detail_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,6 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
           primarySwatch: Colors.pink,
@@ -35,8 +40,16 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // default is '/'
-        '/': (context) => CategoriesScreen(),
+        '/': (context) => TabsScreen(),
         CategoryDetailsScreen.routeName: (context) => CategoryDetailsScreen(),
+        MealDetailScreen.routeName: (context) => MealDetailScreen(),
+      },
+      // onGeneratroute is used when a navigation is occure which is not registered in routes
+      onGenerateRoute: (settings) {
+        // return MaterialPageRoute means it return CategoriesScreen on this case
+        return MaterialPageRoute(
+          builder: (context) => CategoriesScreen(),
+        );
       },
     );
   }

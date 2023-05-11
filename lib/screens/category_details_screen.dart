@@ -22,10 +22,16 @@ class CategoryDetailsScreen extends StatelessWidget {
       },
     ).toList();
     return Scaffold(
-        appBar: AppBar(title: Text(categorytitle)),
+        appBar: AppBar(
+          title: Text(
+            categorytitle,
+            style: TextStyle(fontFamily: 'Raleway'),
+          ),
+        ),
         body: ListView.builder(
           itemBuilder: (context, index) {
             return MealItemWidget(
+                id: categoryMeal[index].id,
                 title: categoryMeal[index].title,
                 imageUrl: categoryMeal[index].imageUrl,
                 duration: categoryMeal[index].duration,
