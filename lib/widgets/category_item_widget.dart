@@ -8,8 +8,8 @@ class CategoryItemWidget extends StatelessWidget {
   CategoryItemWidget(this.title, this.color, this.id);
 // passing data to another screen through pushnamed
   void CategoryRecipesLoader(BuildContext context) {
-    Navigator.of(context)
-        .pushNamed('/categroy-details', arguments: {'id': id, 'title': title});
+    Navigator.of(context).pushNamed(CategoryDetailsScreen.routeName,
+        arguments: {'id': id, 'title': title});
   }
 
   @override
