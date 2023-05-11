@@ -39,54 +39,66 @@ class MealDetailScreen extends StatelessWidget {
       (element) => element.id == mealId,
     );
     return Scaffold(
-        appBar: AppBar(
-            title: Text(
-          '${mealSelected.title}',
-          style: TextStyle(fontFamily: 'Raleway'),
-        )),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                width: mediaQuery.size.width * 1,
-                // height: (MediaQuery.of(context).size.height - appBar),
-                child: Image.network(
-                  mealSelected.imageUrl,
-                  fit: BoxFit.cover,
-                ),
+      appBar: AppBar(
+          title: Text(
+        '${mealSelected.title}',
+        style: TextStyle(fontFamily: 'Raleway'),
+      )),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              width: mediaQuery.size.width * 1,
+              // height: (MediaQuery.of(context).size.height - appBar),
+              child: Image.network(
+                mealSelected.imageUrl,
+                fit: BoxFit.cover,
               ),
-              buildSectiontitle(context, "Ingredients"),
-              buildContainer(
-                ListView.builder(
-                  itemBuilder: (context, index) => Card(
-                    color: Theme.of(context).primaryColor,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 10),
-                      child: Text(mealSelected.ingredients[index]),
-                    ),
+            ),
+            buildSectiontitle(context, "Ingredients"),
+            buildContainer(
+              ListView.builder(
+                itemBuilder: (context, index) => Card(
+                  color: Theme.of(context).accentColor,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    child: Text(mealSelected.ingredients[index]),
                   ),
-                  itemCount: mealSelected.ingredients.length,
                 ),
+                itemCount: mealSelected.ingredients.length,
               ),
-              buildSectiontitle(context, "Steps"),
-              buildContainer(ListView.builder(
-                itemBuilder: (context, index) => Column(children: [
-                  ListTile(
-                    leading: CircleAvatar(child: Text("# ${index + 1}")),
-                    title: Text(
-                      mealSelected.steps[index],
-                      style: TextStyle(
-                          fontFamily: "Robotocondensed",
-                          fontWeight: FontWeight.normal),
-                    ),
+            ),
+            buildSectiontitle(context, "Steps"),
+            buildContainer(ListView.builder(
+              itemBuilder: (context, index) => Column(children: [
+                ListTile(
+                  leading: CircleAvatar(child: Text("# ${index + 1}")),
+                  title: Text(
+                    mealSelected.steps[index],
+                    style: TextStyle(
+                        fontFamily: "Robotocondensed",
+                        fontWeight: FontWeight.normal),
                   ),
-                  Divider(thickness: 1.2),
-                ]),
-                itemCount: mealSelected.steps.length,
-              )),
-            ],
-          ),
-        ));
+                ),
+                Divider(thickness: 1.2),
+              ]),
+              itemCount: mealSelected.steps.length,
+            )),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).primaryColor,
+        onPressed: () {
+          Navigator.of(context).pop(mealId);
+        },
+        child: Icon(
+          Icons.delete,
+          size: 30,
+          color: Colors.red.shade400,
+        ),
+      ),
+    );
   }
 }

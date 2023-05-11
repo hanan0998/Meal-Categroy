@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './Categories_screen.dart';
 import './favorite_screen.dart';
+import '../widgets/main_drawer.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -27,8 +28,12 @@ class _TabsScreenState extends State<TabsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_pages[_selectedPageIndex]['title']),
+        title: Text(
+          _pages[_selectedPageIndex]['title'],
+          style: TextStyle(fontFamily: 'Raleway', fontWeight: FontWeight.w500),
+        ),
       ),
+      drawer: MyDrawer(),
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: BottomNavigationBar(
         // type: BottomNavigationBarType.shifting,
@@ -36,7 +41,7 @@ class _TabsScreenState extends State<TabsScreen> {
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedPageIndex,
         unselectedItemColor: Colors.white,
-        selectedItemColor: Theme.of(context).colorScheme.secondary,
+        selectedItemColor: Theme.of(context).accentColor,
         backgroundColor: Colors.deepPurple,
         onTap: _selectPage,
         items: [

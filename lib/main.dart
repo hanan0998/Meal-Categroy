@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './screens/filters_screen..dart';
 import './screens/tabs_screen.dart';
 import './screens/favorite_screen.dart';
 import './screens/Categories_screen.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.light(),
           canvasColor: Color.fromRGBO(225, 254, 229, 1),
           accentColor: Colors.amber,
+          primaryColor: Colors.purple.shade900,
           fontFamily: 'Raleway',
           // giving themedata to texttheme to have the theme of the patent themedata
           textTheme: ThemeData.light().textTheme.copyWith(
@@ -44,6 +46,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => TabsScreen(),
         CategoryDetailsScreen.routeName: (context) => CategoryDetailsScreen(),
         MealDetailScreen.routeName: (context) => MealDetailScreen(),
+        FilterScreen.routeName: (context) => FilterScreen(),
       },
       // onGeneratroute is used when a navigation is occure which is not registered in routes
       onGenerateRoute: (settings) {

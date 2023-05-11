@@ -11,6 +11,7 @@ class MealItemWidget extends StatelessWidget {
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
+  final Function removeId;
 
   const MealItemWidget(
       {super.key,
@@ -19,7 +20,8 @@ class MealItemWidget extends StatelessWidget {
       required this.imageUrl,
       required this.duration,
       required this.complexity,
-      required this.affordability});
+      required this.affordability,
+      required this.removeId});
 
   // making getter to use enum value as text
   String get complixityText {
@@ -52,7 +54,14 @@ class MealItemWidget extends StatelessWidget {
   }
 
   void selectMeal(BuildContext context) {
-    Navigator.of(context).pushNamed(MealDetailScreen.routeName, arguments: id);
+    // using then when the MealDetailScreen page deleted , it retrun and value and .then take the value
+    Navigator.of(context)
+        .pushNamed(MealDetailScreen.routeName, arguments: id)
+        .then((value) {
+      if (value != null) {
+        removeId(value);
+      }
+    });
   }
 
   @override
