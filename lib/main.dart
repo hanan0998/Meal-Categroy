@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/dummy_data.dart';
+import 'package:flutter_complete_guide/models/meal.dart';
 
 import './screens/filters_screen..dart';
 import './screens/tabs_screen.dart';
@@ -8,13 +10,47 @@ import './screens/category_details_screen.dart';
 import './screens/meal_detail_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
 
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  Map<String, bool> _filters = {
+    'gluten': false,
+    'lactose': false,
+    'vagan': false,
+    'vegetarian': false
+  };
+// to reflect the filter on the category details screen
+  List<Meal> _avaliableMeals = DUMMY_MealS;
+
+  // making function to pass it to filter_screen
+  void _setFilters(Map<String, bool> filterdata) {
+    setState(() {
+      _filters = filterdata;
+      _avaliableMeals = DUMMY_MealS.where((meal) {
+        if (_filters['gluten'] == true && !meal.isGlutenFree) {
+          return false;
+        }
+        if (_filters['lactose'] == true && !meal.isLactoseFree) {
+          return false;
+        }
+        if (_filters['vagan'] == true && !meal.isVegan) {
+          return false;
+        }
+        if (_filters['vegetarian'] == true && !meal.isVegetarian) {
+          return false;
+        }
+        return true;
+      }).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,9 +80,12 @@ class MyApp extends StatelessWidget {
       routes: {
         // default is '/'
         '/': (context) => TabsScreen(),
-        CategoryDetailsScreen.routeName: (context) => CategoryDetailsScreen(),
+        CategoryDetailsScreen.routeName: (context) =>
+            CategoryDetailsScreen(_avaliableMeals),
         MealDetailScreen.routeName: (context) => MealDetailScreen(),
-        FilterScreen.routeName: (context) => FilterScreen(),
+        // giving function as an argument to FilterScreen
+        FilterScreen.routeName: (context) =>
+            FilterScreen(_filters, _setFilters),
       },
       // onGeneratroute is used when a navigation is occure which is not registered in routes
       onGenerateRoute: (settings) {
