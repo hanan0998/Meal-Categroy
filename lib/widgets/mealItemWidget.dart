@@ -11,17 +11,17 @@ class MealItemWidget extends StatelessWidget {
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
-  final Function removeId;
+  // final Function removeId;
 
-  const MealItemWidget(
-      {super.key,
-      required this.id,
-      required this.title,
-      required this.imageUrl,
-      required this.duration,
-      required this.complexity,
-      required this.affordability,
-      required this.removeId});
+  const MealItemWidget({
+    super.key,
+    required this.id,
+    required this.title,
+    required this.imageUrl,
+    required this.duration,
+    required this.complexity,
+    required this.affordability,
+  });
 
   // making getter to use enum value as text
   String get complixityText {
@@ -59,7 +59,7 @@ class MealItemWidget extends StatelessWidget {
         .pushNamed(MealDetailScreen.routeName, arguments: id)
         .then((value) {
       if (value != null) {
-        removeId(value);
+        // null;
       }
     });
   }

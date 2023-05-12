@@ -8,6 +8,7 @@ import './screens/favorite_screen.dart';
 import './screens/Categories_screen.dart';
 import './screens/category_details_screen.dart';
 import './screens/meal_detail_screen.dart';
+import './models/meal.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,6 +30,9 @@ class _MyAppState extends State<MyApp> {
 // to reflect the filter on the category details screen
   List<Meal> _avaliableMeals = DUMMY_MealS;
 
+  // adding an empty list of meals for favorite meals
+  List<Meal> _favoritedMeals = [];
+
   // making function to pass it to filter_screen
   void _setFilters(Map<String, bool> filterdata) {
     setState(() {
@@ -49,6 +53,30 @@ class _MyAppState extends State<MyApp> {
         return true;
       }).toList();
     });
+  }
+
+  // adding logic for the favorite meals
+  void _toggleFavoriteMeal(String mealId) {
+    final existingIndex = _favoritedMeals.indexWhere((meal) {
+      return meal.id == mealId;
+    });
+
+    if (existingIndex >= 0) {
+      setState(() {
+        _favoritedMeals.removeAt(existingIndex);
+      });
+    } else {
+      setState(() {
+        _favoritedMeals.add(DUMMY_MealS.firstWhere((element) {
+          return element.id == mealId;
+        }));
+      });
+    }
+  }
+
+  // to check whether meal is present in _favoritedMeals
+  bool _isMealFavorite(String id) {
+    return _favoritedMeals.any((element) => element.id == id);
   }
 
   @override
@@ -79,10 +107,11 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       routes: {
         // default is '/'
-        '/': (context) => TabsScreen(),
+        '/': (context) => TabsScreen(_favoritedMeals),
         CategoryDetailsScreen.routeName: (context) =>
             CategoryDetailsScreen(_avaliableMeals),
-        MealDetailScreen.routeName: (context) => MealDetailScreen(),
+        MealDetailScreen.routeName: (context) =>
+            MealDetailScreen(_toggleFavoriteMeal, _isMealFavorite),
         // giving function as an argument to FilterScreen
         FilterScreen.routeName: (context) =>
             FilterScreen(_filters, _setFilters),
